@@ -2,6 +2,7 @@
 using MediatR;
 using Application.Features.Professional.Queries;
 using Domain.Shared;
+using Application.Features.Professional.Commands;
 
 namespace Api.Controllers;
 
@@ -23,5 +24,13 @@ public class ProfessionalController : ControllerBase
         Result<ProfessionalResponse> response = await sender.Send(query, cancellationToken);
 
         return response.IsSuccess ? Ok(response.Value()) : NotFound(response.Error);
+    }
+
+    [HttpPost("create")]
+    public async Task<IActionResult> Save(CreateProfessionalCommand createProfessionalCommand, CancellationToken cancellationToken)
+    {
+        Result response = await sender.Send(createProfessionalCommand, cancellationToken);
+
+        return response.IsSuccess ? Ok(response.IsSuccess) : NotFound(response.Error);
     }
 }

@@ -1,4 +1,6 @@
-﻿using Application.Abstractions.Messaging;
+﻿using Application.Abstractions.Data;
+using Application.Abstractions.Messaging;
+using Domain.Entities;
 using Domain.Shared;
 using MediatR;
 
@@ -6,9 +8,25 @@ namespace Application.Features.Professional.Commands;
 
 internal sealed class CreateProfessionalCommandHandler : ICommandHandler<CreateProfessionalCommand>
 {
-    public Task<Result> Handle(CreateProfessionalCommand request, CancellationToken cancellationToken)
+    private readonly IApplicationDbContext _context;
+
+    public CreateProfessionalCommandHandler(IApplicationDbContext context)
     {
-        //TODO: Se invoca al repositorio o servicio para guardar el Professional
-        throw new NotImplementedException();
+        _context = context;
+    }
+
+    public async Task<Result> Handle(CreateProfessionalCommand request, CancellationToken cancellationToken)
+    {
+        var professional = new Domain.Entities.Professional()
+        {
+            FirstName = request.FirstName,
+            LastName = request.LastName,
+        };
+
+        await _context.Professionals.AddAsync(professional);
+
+        await _context.SaveChangesAsync(cancellationToken);
+
+        return Result.Success();
     }
 }
