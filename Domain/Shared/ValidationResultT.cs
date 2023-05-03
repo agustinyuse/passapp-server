@@ -2,9 +2,9 @@ namespace Domain.Shared;
 
 public sealed class ValidationResult<TValue> : Result<TValue>, IValidationResult
 {
-  private ValidationResult(Error[] errors) : base(value, false, IValidationResult.ValidationError) => Errors = errors;
+  private ValidationResult(Error[] errors) : base(default, false, IValidationResult.ValidationError) => Errors = errors;
 
   public Error[] Errors { get; }
 
-  public static ValidationResult<TValue> WithErrors(Error[] errors) => new(value, errors);
+  public static ValidationResult<TValue> WithErrors(Error[] errors) => new(errors);
 }
