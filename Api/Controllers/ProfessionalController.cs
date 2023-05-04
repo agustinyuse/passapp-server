@@ -8,12 +8,11 @@ namespace Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ProfessionalController : ControllerBase
+public class ProfessionalController : ApiController
 {
-    private readonly ISender sender;
     public ProfessionalController(ISender sender)
+        : base(sender)
     {
-        this.sender = sender;
     }
 
     [HttpGet("getProfessionalById/{id}")]
@@ -29,8 +28,13 @@ public class ProfessionalController : ControllerBase
     [HttpPost("create")]
     public async Task<IActionResult> Save(CreateProfessionalCommand createProfessionalCommand, CancellationToken cancellationToken)
     {
-        Result response = await sender.Send(createProfessionalCommand, cancellationToken);
+        Result result = await sender.Send(createProfessionalCommand, cancellationToken);
 
-        return response.IsSuccess ? Ok(response.IsSuccess) : NotFound(response.Error);
+        if (result.IsFailure)
+        {
+            return BadRequest(result.Error);
+        }
+
+        return result.IsSuccess ? Ok(result.IsSuccess) : NotFound(result.Error);
     }
 }
