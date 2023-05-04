@@ -32,7 +32,7 @@ public class ProfessionalController : ApiController
 
         if (result.IsFailure)
         {
-            return BadRequest(result.Error);
+            return HandleFailure(result);
         }
 
         return result.IsSuccess ? Ok(result.IsSuccess) : NotFound(result.Error);

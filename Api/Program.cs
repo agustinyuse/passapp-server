@@ -1,5 +1,6 @@
 using Application;
 using Infrastructure;
+using Microsoft.AspNetCore.Mvc;
 using Serilog;
 
 
@@ -15,11 +16,13 @@ builder.Services.AddSwaggerGen();
 builder.Environment.IsDevelopment();
 
 builder.Services
-          .AddInfrastructure(builder.Configuration, builder.Environment.IsDevelopment())
-          .AddApplication();
+          .AddApplication()
+          .AddInfrastructure(builder.Configuration, builder.Environment.IsDevelopment());
 
 builder.Host.UseSerilog((context, configuration) =>
                         configuration.ReadFrom.Configuration(context.Configuration));
+
+builder.Services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
 
 var app = builder.Build();
 
