@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class User
+    public sealed class User
     {
         public int UserId { get; set; }
+
+        public ICollection<Role> Roles { get; set; }
     }
 }

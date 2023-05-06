@@ -31,10 +31,37 @@ public class JwtProvider : IJwtProvider
 
         var token = new JwtSecurityToken(_options.Issuer, _options.Audiencie, claims, null, DateTime.UtcNow.AddMinutes(15), signingCredentials);
 
-
         var tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
 
         return tokenValue;
     }
+
+    //todo: tener los permisos en el token
+    //public async Task<string> Generate(User user)
+    //{
+    //    var claims = new List<Claim> {
+    //     new(JwtRegisteredClaimNames.Sub, user.UserId.ToString()),
+    //    };
+
+    //    HashSet<string> permissions = await _permissionService.GetPermissionsAsync(user.UserId);
+
+    //    foreach (var permission in permissions)
+    //    {
+    //        claims.Add(new(CustomClaims.Permissions, permission));
+    //    }
+
+    //    var signingCredentials = new SigningCredentials(
+    //        new SymmetricSecurityKey(
+    //            Encoding.UTF8.GetBytes(_options.SecretKey)),
+    //        SecurityAlgorithms.HmacSha256);
+
+
+    //    var token = new JwtSecurityToken(_options.Issuer, _options.Audiencie, claims, null, DateTime.UtcNow.AddMinutes(15), signingCredentials);
+
+
+    //    var tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
+
+    //    return tokenValue;
+    //}
 }
 

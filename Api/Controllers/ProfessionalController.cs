@@ -3,11 +3,14 @@ using MediatR;
 using Application.Features.Professional.Queries;
 using Domain.Shared;
 using Application.Features.Professional.Commands;
+using Infrastructure.Authentication;
+using Domain.Enums;
 
 namespace Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[HasPermission(Permission.AccessProfessional)]
 public class ProfessionalController : ApiController
 {
     public ProfessionalController(ISender sender)
@@ -25,6 +28,7 @@ public class ProfessionalController : ApiController
         return response.IsSuccess ? Ok(response.Value()) : NotFound(response.Error);
     }
 
+    [HasPermission(Permission.AddProfessional)]
     [HttpPost("create")]
     public async Task<IActionResult> Save(CreateProfessionalCommand createProfessionalCommand, CancellationToken cancellationToken)
     {
