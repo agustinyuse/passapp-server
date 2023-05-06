@@ -1,5 +1,6 @@
-﻿
+﻿using Application.Abstractions;
 using Application.Abstractions.Data;
+using Infrastructure.Authentication;
 using Infrastructure.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -27,7 +28,7 @@ public static class DependencyInjection
                 });
 
         services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
-
+        services.AddScoped<IJwtProvider, JwtProvider>();
         return services;
     }
 }
