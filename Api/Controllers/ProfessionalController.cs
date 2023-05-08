@@ -5,6 +5,7 @@ using Domain.Shared;
 using Application.Features.Professional.Commands;
 using Infrastructure.Authentication;
 using Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Api.Controllers;
 
@@ -18,6 +19,7 @@ public class ProfessionalController : ApiController
     {
     }
 
+    [HasPermission(Permission.ReadProfessional)]
     [HttpGet("getProfessionalById/{id}")]
     public async Task<IActionResult> GetById(int id, CancellationToken cancellationToken)
     {

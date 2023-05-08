@@ -2,6 +2,6 @@
 
 public class Permission
 {
-    public int Id { get; set; }
+    public int PermissionId { get; set; }
     public string Name { get; set; } = string.Empty;
 }

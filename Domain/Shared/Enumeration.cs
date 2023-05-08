@@ -11,17 +11,17 @@ namespace Expensely.Domain.Shared
         where TEnum : Enumeration<TEnum>
     {
         private static readonly Lazy<Dictionary<int, TEnum>> EnumerationsDictionary = new(
-            () => GetAllEnumerationOptions(typeof(TEnum)).ToDictionary(enumeration => enumeration.Value));
+            () => GetAllEnumerationOptions(typeof(TEnum)).ToDictionary(enumeration => enumeration.Id));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Enumeration{TEnum}"/> class.
         /// </summary>
-        /// <param name="value">The enumeration value.</param>
+        /// <param name="id">The enumeration value.</param>
         /// <param name="name">The enumeration name.</param>
-        protected Enumeration(int value, string name)
+        protected Enumeration(int id, string name)
             : this()
         {
-            Value = value;
+            Id = id;
             Name = name;
         }
 
@@ -39,12 +39,12 @@ namespace Expensely.Domain.Shared
         /// Gets the enumeration values.
         /// </summary>
         /// <returns>The read-only collection of enumeration values.</returns>
-        public static IReadOnlyCollection<TEnum> List => EnumerationsDictionary.Value.Values.ToList();
+        public static IReadOnlyCollection<TEnum> GetValues => EnumerationsDictionary.Value.Values.ToList();
 
         /// <summary>
         /// Gets or sets the value.
         /// </summary>
-        public int Value { get; protected set; }
+        public int Id { get; protected set; }
 
         /// <summary>
         /// Gets or sets the name.
@@ -99,7 +99,7 @@ namespace Expensely.Domain.Shared
                 return false;
             }
 
-            return GetType() == other.GetType() && other.Value.Equals(Value);
+            return GetType() == other.GetType() && other.Id.Equals(Id);
         }
 
         /// <inheritdoc />
@@ -120,14 +120,14 @@ namespace Expensely.Domain.Shared
                 return false;
             }
 
-            return otherValue.Value.Equals(Value);
+            return otherValue.Id.Equals(Id);
         }
 
         /// <inheritdoc />
-        public int CompareTo(Enumeration<TEnum> other) => other is null ? 1 : Value.CompareTo(other.Value);
+        public int CompareTo(Enumeration<TEnum> other) => other is null ? 1 : Id.CompareTo(other.Id);
 
         /// <inheritdoc />
-        public override int GetHashCode() => Value.GetHashCode();
+        public override int GetHashCode() => Id.GetHashCode();
 
         private static IEnumerable<TEnum> GetAllEnumerationOptions(Type enumType) =>
             Assembly

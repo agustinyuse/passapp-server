@@ -15,15 +15,23 @@ public class PermissionService : IPermissionService
 
     public async Task<HashSet<string>> GetPermissionsAsync(int userId)
     {
-        ICollection<Role>[] roles = await _context.Users
-                                                        .Include(p => p.Roles)
-                                                        .ThenInclude(p => p.Permissions)
-                                                        .Where(p => p.UserId == userId)
-                                                        .Select(p => p.Roles)
-                                                        .ToArrayAsync();
-        return roles.SelectMany(x => x)
-                    .SelectMany(x => x.Permissions)
-                    .Select(x => x.Name)
-                    .ToHashSet();
+        try
+        {
+            ICollection<RolePermission> roles = await _context.UserRoles.Include(p => p.Role).ThenInclude(p => p.Permissions).ThenInclude(p => p.Permission).Where(p => p.UserId == userId)
+                .SelectMany(p => p.Role.Permissions)
+                .ToArrayAsync();
+
+
+
+            return roles.Select(x => x.Permission.Name)
+                        .ToHashSet();
+
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
+
     }
 }

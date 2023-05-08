@@ -16,16 +16,16 @@ namespace Api.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Save(LoginCommand loginCommand, CancellationToken cancellationToken)
+        public async Task<IActionResult> Login(LoginCommand loginCommand, CancellationToken cancellationToken)
         {
-            Result result = await sender.Send(loginCommand, cancellationToken);
+            Result<string> result = await sender.Send(loginCommand, cancellationToken);
 
             if (result.IsFailure)
             {
                 return HandleFailure(result);
             }
 
-            return result.IsSuccess ? Ok(result.IsSuccess) : NotFound(result.Error);
+            return result.IsSuccess ? Ok(result.Value()) : NotFound(result.Error);
         }
     }
 }

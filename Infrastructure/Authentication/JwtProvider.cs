@@ -20,7 +20,7 @@ public class JwtProvider : IJwtProvider
     public string Generate(User user)
     {
         var claims = new Claim[] {
-         new(JwtRegisteredClaimNames.Sub, user.UserId.ToString()),
+         new(JwtRegisteredClaimNames.Sid, user.Id.ToString()),
         };
 
         var signingCredentials = new SigningCredentials(
