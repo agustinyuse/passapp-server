@@ -12,13 +12,11 @@ namespace Infrastructure.Persistance;
 
 public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
-    private readonly string? _userId;
+    private readonly IHttpContextAccessor _contextAccessor;
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,
-        IHttpContextAccessor accessor) : base(options)
+        IHttpContextAccessor contextAccessor) : base(options)
     {
-        _userId = accessor.HttpContext?
-            .User.Claims.FirstOrDefault(x =>
-                x.Type == JwtRegisteredClaimNames.Sid)?.Value;
+        _contextAccessor = contextAccessor;
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -34,12 +32,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        int userId = 0;
-
-        if (!int.TryParse(_userId, out userId))
-        {
-            throw new Exception();
-        }
+        int userId = GetCurrentUserId();
 
         foreach (var entry in ChangeTracker.Entries<BaseEntity>())
         {
@@ -58,6 +51,22 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
         }
 
         return await base.SaveChangesAsync(cancellationToken);
+    }
+
+    private int GetCurrentUserId()
+    {
+        string? userIdClaim = _contextAccessor.HttpContext?
+           .User.Claims.FirstOrDefault(x =>
+               x.Type == JwtRegisteredClaimNames.Sid)?.Value;
+
+        if (!int.TryParse(userIdClaim, out int userId))
+        {
+            // Handle the case when the user ID is not available or not valid
+            // For example, you can log an error or throw an exception.
+            throw new Exception("Unable to retrieve the current user ID.");
+        }
+
+        return userId;
     }
 
     public DbSet<Professional> Professionals { get; set; }
