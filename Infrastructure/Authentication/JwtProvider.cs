@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Infrastructure.Authentication;
 
-public class JwtProvider : IJwtProvider
+internal sealed class JwtProvider : IJwtProvider
 {
     private readonly JwtOptions _options;
 
@@ -20,7 +20,8 @@ public class JwtProvider : IJwtProvider
     public string Generate(User user)
     {
         var claims = new Claim[] {
-         new(JwtRegisteredClaimNames.Sid, user.Id.ToString()),
+         new(JwtRegisteredClaimNames.Sid, 
+         user.Id.ToString()),
         };
 
         var signingCredentials = new SigningCredentials(
@@ -29,9 +30,15 @@ public class JwtProvider : IJwtProvider
             SecurityAlgorithms.HmacSha256);
 
 
-        var token = new JwtSecurityToken(_options.Issuer, _options.Audiencie, claims, null, DateTime.UtcNow.AddMinutes(15), signingCredentials);
+        var token = new JwtSecurityToken(_options.Issuer, 
+            _options.Audience, 
+            claims, 
+            null,
+            DateTime.UtcNow.AddMinutes(_options.Expires), 
+            signingCredentials);
 
-        var tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
+        var tokenValue = new JwtSecurityTokenHandler()
+            .WriteToken(token);
 
         return tokenValue;
     }

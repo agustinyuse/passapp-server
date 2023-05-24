@@ -7,6 +7,7 @@ using Infrastructure.Persistance;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using System.Text;
@@ -33,17 +34,7 @@ builder.Host.UseSerilog((context, configuration) =>
 builder.Services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(op => op.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
-    {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = "passapp",
-        ValidAudience = "passapp",
-        SaveSigninToken = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("_d6IIvvPnPYTMeVnHtaKb1sUJQlap9GtuorZ1D9MGl4"))
-    });
+    .AddJwtBearer();
 
 builder.Services.ConfigureOptions<JwtOptionsSetup>();
 builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
@@ -51,6 +42,7 @@ builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
 builder.Services.AddAuthorization();
 builder.Services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
 builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -87,6 +79,7 @@ using (var scope = app.Services.CreateScope())
         }
         context.RolePermissions.Add(new RolePermission() { RoleId = 1, PermissionId = 1 });
         context.RolePermissions.Add(new RolePermission() { RoleId = 1, PermissionId = 2 });
+        context.RolePermissions.Add(new RolePermission() { RoleId = 1, PermissionId = 3 });
 
         context.SaveChanges();
     }

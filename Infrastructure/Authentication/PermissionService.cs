@@ -17,7 +17,11 @@ public class PermissionService : IPermissionService
     {
         try
         {
-            ICollection<RolePermission> roles = await _context.UserRoles.Include(p => p.Role).ThenInclude(p => p.Permissions).ThenInclude(p => p.Permission).Where(p => p.UserId == userId)
+            ICollection<RolePermission> roles = await _context.UserRoles
+                .Include(p => p.Role)
+                 .ThenInclude(p => p.Permissions)
+                 .ThenInclude(p => p.Permission)
+                .Where(p => p.UserId == userId)
                 .SelectMany(p => p.Role.Permissions)
                 .ToArrayAsync();
 

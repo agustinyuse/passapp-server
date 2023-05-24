@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Shared
 {
-    public abstract class AuditableBaseEntity
+    public abstract class BaseEntity
     {
         public DateTime DateCreated { get; set; }
         public DateTime? DateUpdated { get; set; }
