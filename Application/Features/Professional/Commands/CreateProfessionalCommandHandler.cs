@@ -1,8 +1,7 @@
 ﻿using Application.Abstractions.Data;
 using Application.Abstractions.Messaging;
-using Domain.Entities;
 using Domain.Shared;
-using MediatR;
+using Domain.Entities;
 
 namespace Application.Features.Professional.Commands;
 
@@ -17,11 +16,24 @@ internal sealed class CreateProfessionalCommandHandler : ICommandHandler<CreateP
 
     public async Task<Result> Handle(CreateProfessionalCommand request, CancellationToken cancellationToken)
     {
-        var professional = new Domain.Entities.Professional()
+        Result<Domain.Entities.Professional> professionalCreateResult = Domain.Entities.Professional.Create(request.FirstName,
+            request.LastName);
+
+        Domain.Entities.Professional professional = professionalCreateResult.Value();
+
+        if (request.withAddress)
         {
-            FirstName = request.FirstName,
-            LastName = request.LastName,
-        };
+            professional.CreateProfessionalAddress(request.Street,
+                request.Number,
+                request.City,
+                request.State,
+                request.Country,
+                request.AdjacentStreet1,
+                request.AdjacentStreet2,
+                request.Floor,
+                request.Unit,
+                request.ZipCode);   
+        }
 
         await _context.Professionals.AddAsync(professional);
 

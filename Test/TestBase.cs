@@ -1,15 +1,17 @@
-﻿using Application.Abstractions.Data;
+﻿using Application;
+using Application.Abstractions.Data;
 using Application.Features.Professional.Commands;
 using Infrastructure.Persistance;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Test;
 
-internal abstract class TestBase
+public abstract class TestBase
 {
-    private readonly IServiceProvider _serviceProvider;
+    public readonly IServiceProvider _serviceProvider;
 
     protected TestBase()
     {
@@ -24,9 +26,13 @@ internal abstract class TestBase
             w =>
             w.Ignore(InMemoryEventId.TransactionIgnoredWarning)));
 
-        services.AddTransient<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
-        services.AddTransient<CreateProfessionalCommandHandler>();
+        services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
 
+        services.AddHttpContextAccessor();
+
+        services.AddApplication();
+
+        services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
 
         _serviceProvider = services.BuildServiceProvider();
     }

@@ -1,35 +1,32 @@
-﻿using Application.Abstractions.Data;
+﻿using Application.Behaviors;
 using Application.Features.Professional.Commands;
 using Domain.Shared;
 using FluentAssertions;
-using Infrastructure.Persistance;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+using FluentValidation;
+using MediatR;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Test.Professional.Commands
+namespace Test.Professional.Commands;
+
+public class CreateProfessionalCommandHandlerTests : TestBase
 {
-    public class CreateProfessionalCommandHandlerTests
+    [Fact]
+    public async Task Handle_Should_ReturnFailureResult_WhenProfessionalPropsIsNotValid()
     {
-   
+        //Arrange
+        CreateProfessionalCommand createProfessionalCommand =
+            new CreateProfessionalCommand(
+                "Agustin",
+                null);
+        var nextHandlerMock = new Mock<RequestHandlerDelegate<Result>>();
 
-        [Fact]
-        public async Task Handle_Should_ReturnFailureResult_WhenProfessionalPropsIsNotValid()
-        {
-            ////Arrange
-            //var command = new CreateProfessionalCommand("Agustin", null, null, null, null, null, null, null, null, null, null, null);
-            //var handler = new CreateProfessionalCommandHandler(serviceProvider.GetService<IApplicationDbContext>());
+        var validators = new IValidator<CreateProfessionalCommand>[] { new CreateProfessionalCommandValidator() };
+        var behavior = new ValidationPipelineBehavior<CreateProfessionalCommand, Result>(validators);
 
-            ////Act
-            //Result result = await handler.Handle(command, default);
+        //Act
+        Result result = await behavior.Handle(createProfessionalCommand, () => nextHandlerMock.Object(), default);
 
-            ////Assert
-            //result.IsFailure.Should().BeTrue();
-        }
+        //Assert
+        result.IsFailure.Should().BeTrue();
     }
 }
