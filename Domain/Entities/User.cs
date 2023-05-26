@@ -1,8 +1,9 @@
-﻿namespace Domain.Entities;
+﻿using Domain.Shared;
 
-public sealed class User
+namespace Domain.Entities;
+
+public sealed class User: BaseEntity
 {
-    public int Id { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
     public ICollection<UserRole> Roles { get; set; }

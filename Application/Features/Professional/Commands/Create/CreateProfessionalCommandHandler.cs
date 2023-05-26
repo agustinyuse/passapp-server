@@ -3,7 +3,7 @@ using Application.Abstractions.Messaging;
 using Domain.Shared;
 using Domain.Entities;
 
-namespace Application.Features.Professional.Commands;
+namespace Application.Features.Professional.Commands.Create;
 
 internal sealed class CreateProfessionalCommandHandler : ICommandHandler<CreateProfessionalCommand>
 {
@@ -23,16 +23,21 @@ internal sealed class CreateProfessionalCommandHandler : ICommandHandler<CreateP
 
         if (request.withAddress)
         {
-            professional.CreateProfessionalAddress(request.Street,
-                request.Number,
-                request.City,
-                request.State,
-                request.Country,
-                request.AdjacentStreet1,
-                request.AdjacentStreet2,
-                request.Floor,
-                request.Unit,
-                request.ZipCode);   
+            var result = professional.CreateProfessionalAddress(request.Street,
+                   request.Number,
+                   request.City,
+                   request.State,
+                   request.Country,
+                   request.AdjacentStreet1,
+                   request.AdjacentStreet2,
+                   request.Floor,
+                   request.Unit,
+                   request.ZipCode);
+
+            if (result.IsFailure)
+            {
+                return result;
+            }
         }
 
         await _context.Professionals.AddAsync(professional);

@@ -72,7 +72,7 @@ using (var scope = app.Services.CreateScope())
         context.SaveChanges();
         IEnumerable<Permission> permissions = Enum.GetValues<Domain.Enums.Permission>().Select(p => new Permission()
         {
-            PermissionId = (int)p,
+            Id = (int)p,
             Name = p.ToString()
         });
         foreach (Permission permission in permissions)

@@ -28,8 +28,8 @@ public static class DependencyInjection
                         Email = "agustinyuse@gmail.com",
                         Id = 1
                     };
-                   
 
+                    option.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
                    
 
                     //option.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerConnection"), options =>

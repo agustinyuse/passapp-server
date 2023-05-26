@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MediatR;
-using Application.Features.Professional.Queries;
 using Domain.Shared;
-using Application.Features.Professional.Commands;
 using Infrastructure.Authentication;
 using Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
+using Application.Features.Professional.Queries.GetAll;
+using Application.Features.Professional.Queries.GetById;
+using Application.Features.Professional.Commands.Create;
 
 namespace Api.Controllers;
 
@@ -20,12 +21,23 @@ public class ProfessionalController : ApiController
     }
 
     [HasPermission(Permission.ReadProfessional)]
-    [HttpGet("getProfessionalById/{id}")]
+    [HttpGet("getById/{id}")]
     public async Task<IActionResult> GetById(int id, CancellationToken cancellationToken)
     {
         var query = new GetProfessionalByIdQuery(id);
 
         Result<ProfessionalResponse> response = await sender.Send(query, cancellationToken);
+
+        return response.IsSuccess ? Ok(response.Value()) : NotFound(response.Error);
+    }
+
+    [HasPermission(Permission.ReadProfessional)]
+    [HttpGet("getAll")]
+    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
+    {
+        var query = new GetAllQuery();
+
+        Result<List<ProfessionalResponse>> response = await sender.Send(query, cancellationToken);
 
         return response.IsSuccess ? Ok(response.Value()) : NotFound(response.Error);
     }

@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Application.Features.Professional.Commands;
+namespace Application.Features.Professional.Commands.Create;
 
 
 public class CreateProfessionalCommandValidator : AbstractValidator<CreateProfessionalCommand>

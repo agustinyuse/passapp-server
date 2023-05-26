@@ -3,7 +3,7 @@ using Application.Abstractions.Data;
 using Application.Abstractions.Messaging;
 using Domain.Shared;
 
-namespace Application.Features.User.Commands;
+namespace Application.Features.Account.Commands;
 
 internal sealed class LoginCommandHandler : ICommandHandler<LoginCommand, string>
 {

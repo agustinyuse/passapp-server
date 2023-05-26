@@ -59,7 +59,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
            .User.Claims.FirstOrDefault(x =>
                x.Type == JwtRegisteredClaimNames.Sid)?.Value;
 
-        if (int.TryParse(userIdClaim, out int userId))
+        if (!int.TryParse(userIdClaim, out int userId))
         {
             // Handle the case when the user ID is not available or not valid
             // For example, you can log an error or throw an exception.

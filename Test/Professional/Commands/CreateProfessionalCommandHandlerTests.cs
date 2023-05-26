@@ -1,5 +1,6 @@
 ﻿using Application.Behaviors;
 using Application.Features.Professional.Commands;
+using Application.Features.Professional.Commands.Create;
 using Domain.Shared;
 using FluentAssertions;
 using FluentValidation;

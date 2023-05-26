@@ -8,11 +8,11 @@ public class PermissionEntityTypeConfiguration : IEntityTypeConfiguration<Permis
 {
     public void Configure(EntityTypeBuilder<Permission> builder)
     {
-        builder.HasKey(p => p.PermissionId);
+        builder.HasKey(p => p.Id);
 
         IEnumerable<Permission> permissions = Enum.GetValues<Domain.Enums.Permission>().Select(p => new Permission()
         {
-            PermissionId = (int)p,
+            Id = (int)p,
             Name = p.ToString()
         });
 

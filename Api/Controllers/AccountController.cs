@@ -1,5 +1,5 @@
-﻿using Application.Features.Professional.Commands;
-using Application.Features.User.Commands;
+﻿using Application.Features.Account.Commands;
+using Application.Features.Professional.Commands;
 using Domain.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -8,9 +8,9 @@ namespace Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class UserController : ApiController
+    public class AccountController : ApiController
     {
-        public UserController(ISender sender)
+        public AccountController(ISender sender)
         : base(sender)
         {
         }

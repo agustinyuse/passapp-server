@@ -1,7 +1,8 @@
-﻿namespace Domain.Entities;
+﻿using Domain.Shared;
 
-public class Permission
+namespace Domain.Entities;
+
+public class Permission : BaseEntity
 {
-    public int PermissionId { get; set; }
     public string Name { get; set; } = string.Empty;
 }

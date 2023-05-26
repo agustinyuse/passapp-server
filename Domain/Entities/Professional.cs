@@ -19,7 +19,7 @@ public sealed class Professional : BaseEntity
 
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
-    public IReadOnlyCollection<ProfessionalAddress> Addresses { get; set; }
+    public IReadOnlyCollection<ProfessionalAddress> Addresses => _professionalAddresses;
 
     public static Result<Professional> Create(string firstName,
         string lastName)
@@ -40,7 +40,7 @@ public sealed class Professional : BaseEntity
         return professional;
     }
 
-    public void CreateProfessionalAddress(string Street,
+    public Result CreateProfessionalAddress(string Street,
     string number,
     string city,
     string state,
@@ -65,6 +65,13 @@ public sealed class Professional : BaseEntity
             unit,
             zipCode);
 
+        if (address.IsFailure)
+        {
+            return Result.Failure(address.Error); 
+        }
+
         _professionalAddresses.Add(address.Value());
+
+        return Result.Success();
     }
 }
