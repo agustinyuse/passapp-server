@@ -85,6 +85,13 @@ using (var scope = app.Services.CreateScope())
         context.RolePermissions.Add(new RolePermission() { RoleId = 1, PermissionId = 3 });
 
         context.SaveChanges();
+
+        for (int i = 0; i < 1000; i++)
+        {
+            context.Professionals.Add(new Professional($"firstName {i}", $"lastName {i}"));
+        }
+
+        context.SaveChanges();
     }
     catch (Exception ex)
     {

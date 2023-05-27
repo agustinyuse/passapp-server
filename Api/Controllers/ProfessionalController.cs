@@ -32,10 +32,10 @@ public class ProfessionalController : ApiController
     }
 
     [HasPermission(Permission.ReadProfessional)]
-    [HttpGet("getAll")]
-    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
+    [HttpGet("getAll/{page}/{pageSize}")]
+    public async Task<IActionResult> GetAll(int page, int pageSize, CancellationToken cancellationToken)
     {
-        var query = new GetAllQuery();
+        var query = new GetAllQuery(page, pageSize);
 
         Result<List<ProfessionalResponse>> response = await sender.Send(query, cancellationToken);
 

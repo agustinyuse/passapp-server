@@ -3,8 +3,13 @@ using System.Text;
 
 public static class AddressHelper
 {
-    public static string GetFullAddressDescription(ProfessionalAddress address)
+    public static string? GetFullAddressDescription(ProfessionalAddress address)
     {
+        if (address is null)
+        {
+            return null;
+        }
+
         StringBuilder descriptionBuilder = new StringBuilder();
 
         // Agregar la calle y el número de la dirección

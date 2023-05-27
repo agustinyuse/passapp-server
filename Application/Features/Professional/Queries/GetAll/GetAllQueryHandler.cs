@@ -19,18 +19,26 @@ internal class GetAllQueryHandler : IQueryHandler<GetAllQuery, List<Professional
     {
         _context = context;
     }
+
     public async Task<Result<List<ProfessionalResponse>>> Handle(GetAllQuery request, CancellationToken cancellationToken)
     {
-        return await _context.Professionals
-            .Include(p => p.Addresses)
-                .Select(p => new ProfessionalResponse(
-                p.Id,
-                p.FirstName,
-                p.LastName,
-                p.Addresses
-                .Select(a => AddressHelper.GetFullAddressDescription(a))
-                .ToList()
-            ))
-        .ToListAsync();
+        var professionalResponses = await _context.Professionals
+                                    .Include(p => p.Addresses)
+                                    .OrderBy(p => p.Id)
+                                    .Skip((request.Page - 1) * request.PageSize)
+                                    .Take(request.PageSize)
+                                    .Select(p => new ProfessionalResponse(
+                                        p.Id,
+                                        p.FirstName,
+                                        p.LastName,
+                                        p.Addresses
+                                            .Select(a => AddressHelper.GetFullAddressDescription(a))
+                                            .DefaultIfEmpty()
+                                            .ToList()
+                                    ))
+                                    .ToListAsync(cancellationToken);
+
+        return professionalResponses;
+
     }
 }
