@@ -23,12 +23,8 @@ public static class DomainErrors
     public static class ProfessionalAddress
     {
         public static readonly Error StreetRequired = new(
-         "Street.Required",
-         "Street is required");
-
-        public static readonly Error NumberRequired = new(
-           "Number.Required",
-           "Number is required");
+         "Address.Required",
+         "Address is required");
 
         public static readonly Error CityRequired = new(
             "City.Required",
@@ -41,5 +37,16 @@ public static class DomainErrors
         public static readonly Error CountryRequired = new(
             "Country.Required",
             "Country is required");
+    }
+
+    public static class Pase
+    {
+        public static readonly Error OrganismRequired = new(
+         "Organism.Required",
+         "Organism is required");
+
+        public static readonly Error DescriptionRequired = new(
+         "Description.Required",
+         "Description is required");
     }
 }

@@ -1,22 +1,19 @@
-﻿using Application.Abstractions.Data;
+﻿using Application.Abstractions;
+using Application.Abstractions.Data;
 using Domain.Entities;
 using Domain.Shared;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 
 namespace Infrastructure.Persistance;
 
 public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
-    private readonly IHttpContextAccessor _contextAccessor;
+    private readonly IUserProvider _userProvider;
+
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,
-        IHttpContextAccessor contextAccessor) : base(options)
+        IUserProvider userProvider) : base(options)
     {
-        _contextAccessor = contextAccessor;
+        _userProvider = userProvider;
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -32,7 +29,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        int userId = GetCurrentUserId();
+        int userId = await _userProvider.GetCurrentUserId();
 
         foreach (var entry in ChangeTracker.Entries<BaseEntity>())
         {
@@ -41,6 +38,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
                 case EntityState.Added:
                     entry.Entity.CreatedUserId = userId;
                     entry.Entity.DateCreated = DateTime.UtcNow;
+
                     break;
 
                 case EntityState.Modified:
@@ -53,26 +51,11 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
         return await base.SaveChangesAsync(cancellationToken);
     }
 
-    private int GetCurrentUserId()
-    {
-        string? userIdClaim = _contextAccessor.HttpContext?
-           .User.Claims.FirstOrDefault(x =>
-               x.Type == JwtRegisteredClaimNames.Sid)?.Value;
-
-        if (!int.TryParse(userIdClaim, out int userId))
-        {
-            // Handle the case when the user ID is not available or not valid
-            // For example, you can log an error or throw an exception.
-            throw new Exception("Unable to retrieve the current user ID.");
-        }
-
-        return userId;
-    }
-
     public DbSet<Professional> Professionals { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Role> Roles { get; set; }
     public DbSet<Permission> Permissions { get; set; }
     public DbSet<RolePermission> RolePermissions { get; set; }
     public DbSet<UserRole> UserRoles { get; set; }
+    public DbSet<Organism> Organizations { get; set; }
 }

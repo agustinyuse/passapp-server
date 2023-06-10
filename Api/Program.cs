@@ -44,6 +44,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
 builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddMemoryCache();
 
 builder.Services.AddTransient<GlobalExceptionHandlingMiddleware>();
 
@@ -55,16 +56,28 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-        var testUser = new User
-        {
-            Id = 1,
-            Email = "agustinyuse@gmail.com",
-            Password = "password"
-        };
 
-        context.Users.Add(testUser);
+        for (int i = 1; i <= 3; i++)
+        {
+            context.Organizations.Add(Organism.Create($"code{i}", $"name{i}"));
+        }
+
         context.SaveChanges();
 
+        for (int i = 0; i < 2; i++)
+        {
+            var testUser = new User
+            {
+                Id = 1,
+                Email = "agustinyuse@gmail.com",
+                Password = "password",
+                OrganismId = i,
+            };
+
+            context.Users.Add(testUser);
+        }
+
+        context.SaveChanges();
 
         context.Roles.Add(Role.Registered);
         context.SaveChanges();
@@ -86,19 +99,23 @@ using (var scope = app.Services.CreateScope())
 
         context.SaveChanges();
 
-        for (int i = 0; i < 1000; i++)
-        {
-            context.Professionals.Add(new Professional($"firstName {i}", $"lastName {i}"));
-        }
+        //for (int i = 0; i < 1000; i++)
+        //{
+        //    if (true)
+        //    {
 
-        context.SaveChanges();
+        //    }
+        //    context.Professionals.Add(new Professional($"firstName {i}", $"lastName {i}", 1));
+        //}
+
+        //context.SaveChanges();
     }
     catch (Exception ex)
     {
 
         throw;
     }
-    
+
 }
 
 // Configure the HTTP request pipeline.

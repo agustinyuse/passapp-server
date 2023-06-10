@@ -20,8 +20,8 @@ internal sealed class JwtProvider : IJwtProvider
     public string Generate(User user)
     {
         var claims = new Claim[] {
-         new(JwtRegisteredClaimNames.Sid, 
-         user.Id.ToString()),
+         new(JwtRegisteredClaimNames.Sid,
+         user.Id.ToString())
         };
 
         var signingCredentials = new SigningCredentials(
@@ -30,11 +30,11 @@ internal sealed class JwtProvider : IJwtProvider
             SecurityAlgorithms.HmacSha256);
 
 
-        var token = new JwtSecurityToken(_options.Issuer, 
-            _options.Audience, 
-            claims, 
+        var token = new JwtSecurityToken(_options.Issuer,
+            _options.Audience,
+            claims,
             null,
-            DateTime.UtcNow.AddMinutes(_options.Expires), 
+            DateTime.UtcNow.AddMinutes(_options.Expires),
             signingCredentials);
 
         var tokenValue = new JwtSecurityTokenHandler()
