@@ -23,15 +23,10 @@ internal sealed class CreateProfessionalCommandHandler : ICommandHandler<CreateP
 
         if (request.withAddress)
         {
-            var result = professional.CreateProfessionalAddress(request.Street,
-                   request.Number,
+            var result = professional.CreateProfessionalAddress(request.Address,
                    request.City,
                    request.State,
                    request.Country,
-                   request.AdjacentStreet1,
-                   request.AdjacentStreet2,
-                   request.Floor,
-                   request.Unit,
                    request.ZipCode);
 
             if (result.IsFailure)

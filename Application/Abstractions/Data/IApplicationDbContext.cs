@@ -10,6 +10,7 @@ public interface IApplicationDbContext
     DbSet<Role> Roles { get; set; }
     DbSet<Permission> Permissions { get; set; }
     DbSet<RolePermission> RolePermissions { get; set; }
-    public DbSet<UserRole> UserRoles { get; set; }
+    DbSet<UserRole> UserRoles { get; set; }
+    DbSet<Organism> Organizations { get; set; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }
