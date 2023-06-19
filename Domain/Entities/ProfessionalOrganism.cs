@@ -2,8 +2,8 @@
 
 namespace Domain.Entities;
 
-public class ProfessionalOrganism : BaseEntity
+public class ProfessionalOrganization : BaseEntity
 {
     public int ProfessionalId { get; private set; }
-    public int OrganismId { get; set; }
+    public int OrganizationId { get; set; }
 }

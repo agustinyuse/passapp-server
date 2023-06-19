@@ -8,6 +8,10 @@ internal class InternmentEntityTypeConfiguration : IEntityTypeConfiguration<Inte
 {
     public void Configure(EntityTypeBuilder<Internment> builder)
     {
-       builder.HasKey(x => x.Id);
+        builder.HasKey(x => x.Id).HasName("InternmentId"); ;
+        builder.Property(x => x.PatientId).IsRequired();
+        builder.Property(x => x.BedAreaId).IsRequired();
+        builder.Property(x => x.AdmissionDate).IsRequired();
+        builder.Property(x => x.DischargeDate).IsRequired();
     }
 }

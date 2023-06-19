@@ -17,7 +17,7 @@ public sealed class Professional : BaseEntity
 
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
-    public int OrganismId { get; set; }
+    public int OrganizationId { get; set; }
 
     public IReadOnlyCollection<ProfessionalAddress> Addresses => _professionalAddresses;
 

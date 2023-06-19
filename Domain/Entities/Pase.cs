@@ -1,43 +1,52 @@
 ﻿using Domain.Errors;
 using Domain.Shared;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.Entities;
 
-public class Pase : BaseEntity
+public sealed class Pase : BaseEntity
 {
-    private readonly ICollection<Internment> _internations;
-    public Pase(string description, int organismId)
+    private readonly List<Internment> _internations = new();
+    private readonly List<PaseUserPasePermission> _userPermissions = new();
+    public Pase(string name, 
+        int organizationId)
     {
-        Description = description;
-        OrganismId = organismId;
+        Name = name;
+        OrganizationId = organizationId;
     }
 
-    public string Description { get; private set; }
-    public int OrganismId { get; set; }
+    public string Name { get; private set; }
+    public int OrganizationId { get; private set; }
+    public Organization Organization { get; private set; }
 
-    public ICollection<Internment> Internments => _internations;
+    public IReadOnlyCollection<Internment> Internments => _internations;
+    public IReadOnlyCollection<PaseUserPasePermission> UserPermissions => _userPermissions;
 
-    public static Result<Pase> Create(int organismId,
-        string description)
+    public static Result<Pase> Create(int organizationId,
+        string name)
     {
-        var pase = new Pase(description,
-            organismId);
+        var pase = new Pase(name,
+            organizationId);
 
-        if (organismId == 0)
+        if (organizationId == 0)
         {
-            return Result.Failure<Pase>(DomainErrors.Pase.OrganismRequired);
+            return Result.Failure<Pase>(DomainErrors.Pase.OrganizationRequired);
         }
 
-        if (string.IsNullOrWhiteSpace(description))
+        if (string.IsNullOrWhiteSpace(name))
         {
             return Result.Failure<Pase>(DomainErrors.Pase.DescriptionRequired);
         }
 
         return pase;
+    }
+
+    public void Add(int userId, 
+        Domain.Enums.PasePermissionEnum pasePermissionId)
+    {
+        PaseUserPasePermission paseUserPermission = new PaseUserPasePermission(this.Id, 
+            userId, 
+            pasePermissionId);
+
+        _userPermissions.Add(paseUserPermission);
     }
 }

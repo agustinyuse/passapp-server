@@ -4,10 +4,10 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Configurations;
 
-public class ProfessionalOrganismEntityTypeConfiguration : IEntityTypeConfiguration<ProfessionalOrganism>
+public class ProfessionalOrganizationEntityTypeConfiguration : IEntityTypeConfiguration<ProfessionalOrganization>
 {
-    public void Configure(EntityTypeBuilder<ProfessionalOrganism> builder)
+    public void Configure(EntityTypeBuilder<ProfessionalOrganization> builder)
     {
-        builder.HasKey(p => p.Id);
+        builder.HasKey(p => p.Id).HasName("ProfessionalOrganizationId");
     }
 }

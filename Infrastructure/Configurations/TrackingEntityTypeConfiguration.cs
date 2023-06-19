@@ -8,6 +8,8 @@ public class TrackingEntityTypeConfiguration : IEntityTypeConfiguration<Tracking
 {
     public void Configure(EntityTypeBuilder<Tracking> builder)
     {
-        builder.HasKey(x => x.Id);
+        builder.HasKey(x => x.Id).HasName("TrackingId");
+        builder.Property(p => p.InternmentId).IsRequired();
+        builder.Property(p => p.Date).HasDefaultValue(DateTime.UtcNow);
     }
 }

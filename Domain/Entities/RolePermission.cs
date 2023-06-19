@@ -1,6 +1,8 @@
-﻿namespace Domain.Entities;
+﻿using Domain.Shared;
 
-public class RolePermission
+namespace Domain.Entities;
+
+public class RolePermission : BaseEntity
 {
     public int RoleId { get; set; }
     public Role Role { get; set; }

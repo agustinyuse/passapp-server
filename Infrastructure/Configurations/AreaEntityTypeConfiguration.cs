@@ -8,6 +8,8 @@ public class AreaEntityTypeConfiguration : IEntityTypeConfiguration<Area>
 {
     public void Configure(EntityTypeBuilder<Area> builder)
     {
-        builder.HasKey(p => p.Id);
+        builder.HasKey(p => p.Id).HasName("AreaId");
+        builder.Property(p => p.Code).IsRequired().HasMaxLength(20);
+        builder.Property(p => p.Description).IsRequired().HasMaxLength(50);
     }
 }

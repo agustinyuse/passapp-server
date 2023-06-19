@@ -1,9 +1,21 @@
-﻿namespace Domain.Entities;
+﻿using Domain.Shared;
 
-public class UserRole
+namespace Domain.Entities;
+
+public class UserRole: BaseEntity
 {
-    public int UserId { get; set; }
-    public User User { get; set; }
-    public int RoleId { get; set; }
-    public Role Role { get; set; }
+    public UserRole(int roleId)
+    {
+        RoleId = roleId;
+    }
+
+    public int UserId { get; private set; }
+    public User User { get; private set; }
+    public int RoleId { get; private set; }
+    public Role Role { get; private set; }
+
+    public static UserRole Create(int roleId)
+    {
+        return new UserRole(roleId);
+    }
 }
