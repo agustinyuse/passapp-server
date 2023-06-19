@@ -8,23 +8,9 @@ public class RolePermissionEntityTypeConfiguration : IEntityTypeConfiguration<Ro
 {
     public void Configure(EntityTypeBuilder<RolePermission> builder)
     {
-        builder.HasKey(p => new { p.RoleId, p.PermissionId });
+        builder.HasKey(p => p.Id).HasName("RolePermissionId");
 
-        builder.HasData(
-             Create(Role.Registered, Domain.Enums.Permission.AccessProfessional),
-             Create(Role.Registered, Domain.Enums.Permission.UpdateProfessional),
-             Create(Role.Registered, Domain.Enums.Permission.DeleteProfessional),
-             Create(Role.Registered, Domain.Enums.Permission.ReadProfessional),
-             Create(Role.Registered, Domain.Enums.Permission.AddProfessional)
-            );
-    }
-
-    private static RolePermission Create(Role role, Domain.Enums.Permission permission)
-    {
-        return new RolePermission()
-        {
-            RoleId = role.Id,
-            PermissionId = (int)permission,
-        };
+        builder.Property(p => p.CreatedUserId).HasDefaultValue(1);
+        builder.Property(p => p.DateCreated).HasDefaultValue(DateTime.UtcNow);
     }
 }

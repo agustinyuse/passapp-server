@@ -8,9 +8,10 @@ public class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
-        builder.HasKey(p => p.Id);
-
-        User user = new User() { Id = 2, Email = "agustinyuse@gmail.com", Password = "asasasd" };
-        builder.HasData(user);
+        builder.HasKey(p => p.Id).HasName("UserId");
+        builder.Property(p => p.Email).IsRequired().HasMaxLength(50);
+        builder.Property(p => p.Password).IsRequired().HasMaxLength(50);
+        builder.Property(p => p.CreatedUserId).HasDefaultValue(1);
+        builder.Property(p => p.DateCreated).HasDefaultValue(DateTime.UtcNow);
     }
 }

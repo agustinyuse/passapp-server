@@ -13,10 +13,9 @@ internal class UserRoleEntityTypeConfigurations : IEntityTypeConfiguration<UserR
 {
     public void Configure(EntityTypeBuilder<UserRole> builder)
     {
-        builder.HasKey(p => new { p.UserId, p.RoleId });
+        builder.HasKey(p => p.Id).HasName("UserRoleId");
 
-        builder.HasData(
-            new UserRole() { UserId = 1, RoleId = 1 }
-            );
+        builder.Property(p => p.CreatedUserId).HasDefaultValue(1);
+        builder.Property(p => p.DateCreated).HasDefaultValue(DateTime.UtcNow);
     }
 }

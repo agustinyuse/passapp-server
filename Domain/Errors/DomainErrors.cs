@@ -41,9 +41,9 @@ public static class DomainErrors
 
     public static class Pase
     {
-        public static readonly Error OrganismRequired = new(
-         "Organism.Required",
-         "Organism is required");
+        public static readonly Error OrganizationRequired = new(
+         "Organization.Required",
+         "Organization is required");
 
         public static readonly Error DescriptionRequired = new(
          "Description.Required",

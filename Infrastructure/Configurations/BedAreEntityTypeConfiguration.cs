@@ -8,6 +8,9 @@ public class BedAreEntityTypeConfiguration : IEntityTypeConfiguration<BedArea>
 {
     public void Configure(EntityTypeBuilder<BedArea> builder)
     {
-        builder.HasKey(x => x.Id);
+        builder.HasKey(x => x.Id).HasName("BedAreaId");
+        builder.Property(p => p.BedId).IsRequired();
+        builder.Property(p => p.AreaId).IsRequired();
+        builder.Property(p => p.OrganizationId).IsRequired();
     }
 }

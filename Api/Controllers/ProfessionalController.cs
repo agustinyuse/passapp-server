@@ -12,7 +12,6 @@ namespace Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[HasPermission(Permission.AccessProfessional)]
 public class ProfessionalController : ApiController
 {
     public ProfessionalController(ISender sender)
@@ -20,7 +19,6 @@ public class ProfessionalController : ApiController
     {
     }
 
-    [HasPermission(Permission.ReadProfessional)]
     [HttpGet("getById/{id}")]
     public async Task<IActionResult> GetById(int id, CancellationToken cancellationToken)
     {
@@ -31,7 +29,6 @@ public class ProfessionalController : ApiController
         return response.IsSuccess ? Ok(response.Value()) : NotFound(response.Error);
     }
 
-    [HasPermission(Permission.ReadProfessional)]
     [HttpGet("getAll/{page}/{pageSize}")]
     public async Task<IActionResult> GetAll(int page, int pageSize, CancellationToken cancellationToken)
     {
@@ -42,7 +39,6 @@ public class ProfessionalController : ApiController
         return response.IsSuccess ? Ok(response.Value()) : NotFound(response.Error);
     }
 
-    [HasPermission(Permission.AddProfessional)]
     [HttpPost("create")]
     public async Task<IActionResult> Save(CreateProfessionalCommand createProfessionalCommand, CancellationToken cancellationToken)
     {

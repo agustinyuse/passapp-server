@@ -8,7 +8,7 @@ public class RoleEntityTypeConfiguration : IEntityTypeConfiguration<Role>
 {
     public void Configure(EntityTypeBuilder<Role> builder)
     {
-        builder.HasKey(p => p.Id);
+        builder.HasKey(p => p.Id).HasName("RoleId");
         builder.HasData(Role.GetValues);
     }
 }

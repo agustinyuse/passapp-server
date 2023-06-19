@@ -9,9 +9,9 @@ public class Patient : BaseEntity
     public string LastName { get; private set; }
     public int Age { get; private set; }
     public DateTime BirthDate { get; private set; }
-    public Gender GenderId { get; private set; }
-    public DocumentType DocumentTypeId { get; private set; }
+    public GenderEnum GenderId { get; private set; }
+    public DocumentTypeEnum DocumentTypeId { get; private set; }
     public string DocumentNumber { get; private set; }
     public int HealthInsurancePlanId { get; private set; }
-    public int OrganismId { get; set; }
+    public int OrganizationId { get; set; }
 }

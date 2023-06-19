@@ -2,9 +2,9 @@
 
 namespace Domain.Entities;
 
-public class Organism : BaseEntity
+public class Organization : BaseEntity
 {
-    public Organism(string code, 
+    public Organization(string code, 
         string name)
     {
         Code = code;
@@ -14,12 +14,12 @@ public class Organism : BaseEntity
     public string Code { get; private set; }
     public string Name { get; private set; }
 
-    public static Organism Create(string code, 
+    public static Organization Create(string code, 
         string name)
     {
-        var organism = new Organism(code, 
+        var Organization = new Organization(code, 
             name);
 
-        return organism;
+        return Organization;
     }
 }

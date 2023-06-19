@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Domain.Enums;
 
-public enum Gender
+public enum PasePermissionEnum
 {
-    Male = 1,
-    Female = 2,
-    Other = 3
+    Editor = 1,
+    Read = 2,
+    Comments = 3
 }

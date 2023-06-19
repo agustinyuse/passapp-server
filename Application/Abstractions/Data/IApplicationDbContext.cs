@@ -11,6 +11,9 @@ public interface IApplicationDbContext
     DbSet<Permission> Permissions { get; set; }
     DbSet<RolePermission> RolePermissions { get; set; }
     DbSet<UserRole> UserRoles { get; set; }
-    DbSet<Organism> Organizations { get; set; }
+    DbSet<Organization> Organizations { get; set; }
+    DbSet<Pase> Pases { get; set; }
+    DbSet<PasePermission> PasePermissions { get; set; }
+    DbSet<PaseUserPasePermission> PaseUserPasePermissions { get; set; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }
