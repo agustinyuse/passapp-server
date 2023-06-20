@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Configurations;
 
-public class ProfessionalEntityTypeConfiguration : IEntityTypeConfiguration<Professional>
+public sealed class ProfessionalEntityTypeConfiguration : IEntityTypeConfiguration<Professional>
 {
     public void Configure(EntityTypeBuilder<Professional> builder)
     {

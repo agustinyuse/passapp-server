@@ -10,5 +10,6 @@ public enum PasePermissionEnum
 {
     Editor = 1,
     Read = 2,
-    Comments = 3
+    Comments = 3,
+    Owner = 4
 }

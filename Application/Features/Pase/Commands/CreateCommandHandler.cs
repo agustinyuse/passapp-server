@@ -10,17 +10,21 @@ public class CreateCommandHandler : ICommandHandler<CreateCommand>
 {
     private readonly IApplicationDbContext _context;
     private readonly IEmailService _emailService;
+    private readonly IUserProvider _userProvider;
 
     public CreateCommandHandler(IApplicationDbContext context,
-        IEmailService emailService)
+        IEmailService emailService,
+        IUserProvider userProvider)
     {
         _context = context;
         _emailService = emailService;
+        _userProvider = userProvider;
     }
 
     public async Task<Result> Handle(CreateCommand request, CancellationToken cancellationToken)
     {
         Result<Domain.Entities.Pase> paseCreateResult = Domain.Entities.Pase.Create(request.OrganizationId,
+            request.AreaId,
             request.Description);
 
         if (paseCreateResult.IsFailure)
@@ -38,6 +42,9 @@ public class CreateCommandHandler : ICommandHandler<CreateCommand>
                 pase.Add(userDb.Id,
                     user.PasePermissionId);
             }
+
+            pase.Add(_userProvider.GetCurrentUserId().Value,
+                Domain.Enums.PasePermissionEnum.Owner);
         }
 
         await _context.Pases.AddAsync(pase);

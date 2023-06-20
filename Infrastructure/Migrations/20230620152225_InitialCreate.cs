@@ -20,7 +20,7 @@ namespace Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Code = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     OrganizationId = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -40,7 +40,7 @@ namespace Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Code = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedUserId = table.Column<int>(type: "int", nullable: false),
@@ -80,7 +80,7 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Code = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 6, 17, 22, 17, 35, 277, DateTimeKind.Utc).AddTicks(3651)),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 6, 20, 15, 22, 25, 266, DateTimeKind.Utc).AddTicks(9353)),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedUserId = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
                     UpdatedUserId = table.Column<int>(type: "int", nullable: true),
@@ -204,7 +204,7 @@ namespace Infrastructure.Migrations
                     InternmentId = table.Column<int>(type: "int", nullable: false),
                     ProfessionalId = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 6, 17, 22, 17, 35, 291, DateTimeKind.Utc).AddTicks(5968)),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 6, 20, 15, 22, 25, 277, DateTimeKind.Utc).AddTicks(4751)),
                     OrganizationId = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -225,7 +225,7 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Password = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 6, 17, 22, 17, 35, 292, DateTimeKind.Utc).AddTicks(1543)),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 6, 20, 15, 22, 25, 278, DateTimeKind.Utc).AddTicks(68)),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedUserId = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
                     UpdatedUserId = table.Column<int>(type: "int", nullable: true),
@@ -242,8 +242,9 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     OrganizationId = table.Column<int>(type: "int", nullable: false),
+                    AreaId = table.Column<int>(type: "int", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedUserId = table.Column<int>(type: "int", nullable: false),
@@ -252,7 +253,7 @@ namespace Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pases", x => x.Id);
+                    table.PrimaryKey("PaseId", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Pases_Organizations_OrganizationId",
                         column: x => x.OrganizationId,
@@ -300,7 +301,7 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<int>(type: "int", nullable: false),
                     PermissionId = table.Column<int>(type: "int", nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 6, 17, 22, 17, 35, 289, DateTimeKind.Utc).AddTicks(3612)),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 6, 20, 15, 22, 25, 275, DateTimeKind.Utc).AddTicks(6236)),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedUserId = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
                     UpdatedUserId = table.Column<int>(type: "int", nullable: true),
@@ -331,7 +332,7 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     RoleId = table.Column<int>(type: "int", nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 6, 17, 22, 17, 35, 293, DateTimeKind.Utc).AddTicks(369)),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 6, 20, 15, 22, 25, 278, DateTimeKind.Utc).AddTicks(3476)),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedUserId = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
                     UpdatedUserId = table.Column<int>(type: "int", nullable: true),
@@ -362,7 +363,8 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PatientId = table.Column<int>(type: "int", nullable: false),
                     AdmissionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    BedAreaId = table.Column<int>(type: "int", nullable: false),
+                    Bed = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BedId = table.Column<int>(type: "int", nullable: true),
                     DischargeDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PaseId = table.Column<int>(type: "int", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -405,12 +407,6 @@ namespace Infrastructure.Migrations
                         principalTable: "Pases",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PaseUserPasePermissions_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -420,7 +416,8 @@ namespace Infrastructure.Migrations
                 {
                     { 1, "Editor" },
                     { 2, "Read" },
-                    { 3, "Comments" }
+                    { 3, "Comments" },
+                    { 4, "Owner" }
                 });
 
             migrationBuilder.InsertData(
@@ -454,11 +451,6 @@ namespace Infrastructure.Migrations
                 name: "IX_PaseUserPasePermissions_PaseId",
                 table: "PaseUserPasePermissions",
                 column: "PaseId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PaseUserPasePermissions_UserId",
-                table: "PaseUserPasePermissions",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RolePermissions_PermissionId",

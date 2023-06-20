@@ -2,13 +2,11 @@
 using Application.Abstractions.Data;
 using Infrastructure.Authentication;
 using Infrastructure.Persistance;
-using Infrastructure.Persistance.Filters;
 using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace Infrastructure;
 public static class DependencyInjection

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Configurations;
 
-public class BedAreEntityTypeConfiguration : IEntityTypeConfiguration<BedArea>
+public sealed class BedAreaEntityTypeConfiguration : IEntityTypeConfiguration<BedArea>
 {
     public void Configure(EntityTypeBuilder<BedArea> builder)
     {

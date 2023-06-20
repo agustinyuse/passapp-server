@@ -2,7 +2,7 @@
 
 namespace Domain.Entities;
 
-public class BedArea : BaseEntity
+public sealed class BedArea : BaseEntity
 {
     public int BedId { get; private set; }
     public int AreaId { get; private set; }

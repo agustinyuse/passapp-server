@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Configurations;
 
-internal class PasePermissionEntityTypeConfiguration : IEntityTypeConfiguration<PasePermission>
+internal sealed class PasePermissionEntityTypeConfiguration : IEntityTypeConfiguration<PasePermission>
 {
     public void Configure(EntityTypeBuilder<PasePermission> builder)
     {

@@ -8,24 +8,29 @@ public sealed class Pase : BaseEntity
     private readonly List<Internment> _internations = new();
     private readonly List<PaseUserPasePermission> _userPermissions = new();
     public Pase(string name, 
-        int organizationId)
+        int organizationId,
+        int? areaId)
     {
         Name = name;
         OrganizationId = organizationId;
+        AreaId = areaId;
     }
 
     public string Name { get; private set; }
     public int OrganizationId { get; private set; }
     public Organization Organization { get; private set; }
+    public int? AreaId { get; set; }
 
     public IReadOnlyCollection<Internment> Internments => _internations;
     public IReadOnlyCollection<PaseUserPasePermission> UserPermissions => _userPermissions;
 
     public static Result<Pase> Create(int organizationId,
+        int? areaId,
         string name)
     {
         var pase = new Pase(name,
-            organizationId);
+            organizationId,
+            areaId);
 
         if (organizationId == 0)
         {

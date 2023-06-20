@@ -2,10 +2,11 @@
 
 namespace Domain.Entities;
 
-public class Internment : BaseEntity
+public sealed class Internment : BaseEntity
 {
     public int PatientId { get; private set; }
     public DateTime AdmissionDate { get; private set; }
-    public int BedAreaId { get; private set; }
+    public string Bed { get; private set; }
+    public int? BedId { get; private set; }
     public DateTime DischargeDate { get; private set; }
 }
