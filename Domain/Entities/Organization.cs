@@ -2,7 +2,7 @@
 
 namespace Domain.Entities;
 
-public class Organization : BaseEntity
+public sealed class Organization : BaseEntity
 {
     public Organization(string code, 
         string name)

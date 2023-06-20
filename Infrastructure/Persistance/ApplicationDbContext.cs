@@ -2,10 +2,7 @@
 using Application.Abstractions.Data;
 using Domain.Entities;
 using Domain.Shared;
-using Infrastructure.Authentication;
-using Infrastructure.Persistance.Filters;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
 
 namespace Infrastructure.Persistance;
 
@@ -30,8 +27,8 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
 
         modelBuilder.Entity<Pase>()
-                   .HasQueryFilter(p => p.CreatedUserId == CurrentUserId ||
-                                         p.UserPermissions.Any(q => q.UserId == CurrentUserId));
+                   .HasQueryFilter(p => p.UserPermissions.Any(q => q.UserId == CurrentUserId));
+
         base.OnModelCreating(modelBuilder);
     }
 

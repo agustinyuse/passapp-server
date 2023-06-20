@@ -15,8 +15,6 @@ public sealed class PaseUserPasePermission : BaseEntity
     }
 
     public int PaseId { get; private set; }
-    public Pase Pase { get; private set; }
     public int UserId { get; private set; }
-    public User User { get; private set; }
     public Domain.Enums.PasePermissionEnum PasePermissionId { get; private set; }
 }

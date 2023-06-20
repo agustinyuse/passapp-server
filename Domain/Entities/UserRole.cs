@@ -2,7 +2,7 @@
 
 namespace Domain.Entities;
 
-public class UserRole: BaseEntity
+public sealed class UserRole: BaseEntity
 {
     public UserRole(int roleId)
     {

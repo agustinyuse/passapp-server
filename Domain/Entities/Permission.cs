@@ -3,7 +3,7 @@ using Expensely.Domain.Shared;
 
 namespace Domain.Entities;
 
-public class Permission : Enumeration<Permission>
+public sealed class Permission : Enumeration<Permission>
 {
     public static readonly Permission AccessPase = new((int)PermissionEnum.AccessPase, PermissionEnum.AccessPase.ToString());
     public static readonly Permission ReadPase = new((int)PermissionEnum.ReadPase, PermissionEnum.ReadPase.ToString());

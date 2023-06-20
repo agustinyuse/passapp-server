@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Configurations;
 
-public class TrackingEntityTypeConfiguration : IEntityTypeConfiguration<Tracking>
+public sealed class TrackingEntityTypeConfiguration : IEntityTypeConfiguration<Tracking>
 {
     public void Configure(EntityTypeBuilder<Tracking> builder)
     {

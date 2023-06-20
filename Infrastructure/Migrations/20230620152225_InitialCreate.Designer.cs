@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230617221735_InitialCreate")]
+    [Migration("20230620152225_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -47,13 +47,13 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime?>("DateUpdated")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
 
                     b.Property<int>("OrganizationId")
                         .HasColumnType("int");
@@ -89,13 +89,13 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime?>("DateUpdated")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
 
                     b.Property<int?>("UpdatedUserId")
                         .HasColumnType("int");
@@ -155,7 +155,11 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("AdmissionDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("BedAreaId")
+                    b.Property<string>("Bed")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("BedId")
                         .HasColumnType("int");
 
                     b.Property<int>("CreatedUserId")
@@ -211,7 +215,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 6, 17, 22, 17, 35, 277, DateTimeKind.Utc).AddTicks(3651));
+                        .HasDefaultValue(new DateTime(2023, 6, 20, 15, 22, 25, 266, DateTimeKind.Utc).AddTicks(9353));
 
                     b.Property<DateTime?>("DateUpdated")
                         .HasColumnType("datetime2");
@@ -241,6 +245,9 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("AreaId")
+                        .HasColumnType("int");
+
                     b.Property<int>("CreatedUserId")
                         .HasColumnType("int");
 
@@ -255,7 +262,8 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("OrganizationId")
                         .HasColumnType("int");
@@ -263,7 +271,8 @@ namespace Infrastructure.Migrations
                     b.Property<int?>("UpdatedUserId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("PaseId");
 
                     b.HasIndex("OrganizationId");
 
@@ -302,6 +311,11 @@ namespace Infrastructure.Migrations
                         {
                             Id = 3,
                             Name = "Comments"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Owner"
                         });
                 });
 
@@ -341,8 +355,6 @@ namespace Infrastructure.Migrations
                         .HasName("PaseUserPasePermissionId");
 
                     b.HasIndex("PaseId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("PaseUserPasePermissions");
                 });
@@ -572,7 +584,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 6, 17, 22, 17, 35, 289, DateTimeKind.Utc).AddTicks(3612));
+                        .HasDefaultValue(new DateTime(2023, 6, 20, 15, 22, 25, 275, DateTimeKind.Utc).AddTicks(6236));
 
                     b.Property<DateTime?>("DateUpdated")
                         .HasColumnType("datetime2");
@@ -613,7 +625,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 6, 17, 22, 17, 35, 291, DateTimeKind.Utc).AddTicks(5968));
+                        .HasDefaultValue(new DateTime(2023, 6, 20, 15, 22, 25, 277, DateTimeKind.Utc).AddTicks(4751));
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -662,7 +674,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 6, 17, 22, 17, 35, 292, DateTimeKind.Utc).AddTicks(1543));
+                        .HasDefaultValue(new DateTime(2023, 6, 20, 15, 22, 25, 278, DateTimeKind.Utc).AddTicks(68));
 
                     b.Property<DateTime?>("DateUpdated")
                         .HasColumnType("datetime2");
@@ -705,7 +717,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 6, 17, 22, 17, 35, 293, DateTimeKind.Utc).AddTicks(369));
+                        .HasDefaultValue(new DateTime(2023, 6, 20, 15, 22, 25, 278, DateTimeKind.Utc).AddTicks(3476));
 
                     b.Property<DateTime?>("DateUpdated")
                         .HasColumnType("datetime2");
@@ -752,21 +764,11 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.PaseUserPasePermission", b =>
                 {
-                    b.HasOne("Domain.Entities.Pase", "Pase")
+                    b.HasOne("Domain.Entities.Pase", null)
                         .WithMany("UserPermissions")
                         .HasForeignKey("PaseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Domain.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Pase");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Entities.Professional", b =>

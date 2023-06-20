@@ -2,7 +2,7 @@
 
 namespace Domain.Entities;
 
-public class Tracking : BaseEntity
+public sealed class Tracking : BaseEntity
 {
     public int InternmentId { get; private set; }
     public int ProfessionalId { get; private set; }

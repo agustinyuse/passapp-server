@@ -3,7 +3,7 @@ using Domain.Shared;
 
 namespace Domain.Entities;
 
-public class Patient : BaseEntity
+public sealed class Patient : BaseEntity
 {
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
