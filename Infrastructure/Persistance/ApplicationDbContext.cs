@@ -73,4 +73,5 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<Pase> Pases { get; set; }
     public DbSet<PaseUserPasePermission> PaseUserPasePermissions { get; set; }
     public DbSet<PasePermission> PasePermissions { get; set; }
+    public DbSet<Internment> Internments { get; set; }
 }

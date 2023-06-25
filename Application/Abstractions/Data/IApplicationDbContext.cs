@@ -15,5 +15,6 @@ public interface IApplicationDbContext
     DbSet<Pase> Pases { get; set; }
     DbSet<PasePermission> PasePermissions { get; set; }
     DbSet<PaseUserPasePermission> PaseUserPasePermissions { get; set; }
+    DbSet<Internment> Internments { get; set; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

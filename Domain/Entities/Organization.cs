@@ -4,7 +4,7 @@ namespace Domain.Entities;
 
 public sealed class Organization : BaseEntity
 {
-    public Organization(string code, 
+    private Organization(string code, 
         string name)
     {
         Code = code;
