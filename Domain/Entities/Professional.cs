@@ -8,7 +8,7 @@ public sealed class Professional : BaseEntity
 {
     private readonly List<ProfessionalAddress> _professionalAddresses = new();
 
-    public Professional(string firstName,
+    private Professional(string firstName,
         string lastName)
     {
         FirstName = firstName;

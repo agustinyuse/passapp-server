@@ -5,7 +5,7 @@ namespace Domain.Entities;
 
 public sealed class PaseUserPasePermission : BaseEntity
 {
-    public PaseUserPasePermission(int paseId,
+    private PaseUserPasePermission(int paseId,
         int userId,
         Domain.Enums.PasePermissionEnum pasePermissionId)
     {
@@ -17,4 +17,13 @@ public sealed class PaseUserPasePermission : BaseEntity
     public int PaseId { get; private set; }
     public int UserId { get; private set; }
     public Domain.Enums.PasePermissionEnum PasePermissionId { get; private set; }
+
+    public static PaseUserPasePermission Create(int paseId,
+        int userId, 
+        Domain.Enums.PasePermissionEnum pasePermissionId)
+    {
+        return new PaseUserPasePermission(paseId,
+            userId,
+            pasePermissionId);
+    }
 }

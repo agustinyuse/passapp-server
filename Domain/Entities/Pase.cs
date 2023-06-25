@@ -7,7 +7,7 @@ public sealed class Pase : BaseEntity
 {
     private readonly List<Internment> _internations = new();
     private readonly List<PaseUserPasePermission> _userPermissions = new();
-    public Pase(string name, 
+    private Pase(string name, 
         int organizationId,
         int? areaId)
     {
@@ -48,10 +48,15 @@ public sealed class Pase : BaseEntity
     public void Add(int userId, 
         Domain.Enums.PasePermissionEnum pasePermissionId)
     {
-        PaseUserPasePermission paseUserPermission = new PaseUserPasePermission(this.Id, 
+        PaseUserPasePermission paseUserPermission = PaseUserPasePermission.Create(this.Id, 
             userId, 
             pasePermissionId);
 
         _userPermissions.Add(paseUserPermission);
+    }
+
+    public List<PaseUserPasePermission> GetUsers()
+    {
+        return _userPermissions;
     }
 }

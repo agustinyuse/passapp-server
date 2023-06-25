@@ -43,6 +43,7 @@ public class CreateCommandHandler : ICommandHandler<CreateCommand>
                     user.PasePermissionId);
             }
 
+            //TODO: Tal vez se pueda mejorar esto
             pase.Add(_userProvider.GetCurrentUserId().Value,
                 Domain.Enums.PasePermissionEnum.Owner);
         }

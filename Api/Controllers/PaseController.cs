@@ -17,7 +17,7 @@ namespace Api.Controllers
 
         [HasPermission(PermissionEnum.AccessPase)]
         [HttpGet("getAll")]
-        public async Task<ActionResult> GetAll(GetAllQuery query)
+        public async Task<IActionResult> GetAll(GetAllQuery query)
         {
             var result = await sender.Send(query);
 
